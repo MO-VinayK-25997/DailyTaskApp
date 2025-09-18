@@ -23,6 +23,19 @@ async function initAuthData() {
             users = localUsers ? JSON.parse(localUsers) : [];
         }
         
+        // Add default user if no users exist
+        if (!users.length) {
+            users = [{
+                id: 1,
+                username: 'admin',
+                email: 'admin@test.com',
+                password: '123456',
+                role: 'admin',
+                joinDate: new Date().toLocaleDateString()
+            }];
+            await db.saveUsers(users);
+        }
+        
         window.users = users;
         window.currentUser = currentUser;
         window.todos = todos;
