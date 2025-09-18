@@ -154,6 +154,12 @@ async function login() {
         return;
     }
     
+    // Ensure users is an array
+    if (!Array.isArray(users)) {
+        users = [];
+        window.users = users;
+    }
+    
     const user = users.find(u => u.email === email && u.password === password);
     
     if (user) {
@@ -177,6 +183,12 @@ async function register() {
     if (!username || !email || !password) {
         showNotification('Please fill all fields');
         return;
+    }
+    
+    // Ensure users is an array
+    if (!Array.isArray(users)) {
+        users = [];
+        window.users = users;
     }
     
     if (users.find(u => u.email === email)) {
