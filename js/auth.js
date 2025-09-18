@@ -176,6 +176,14 @@ async function login() {
         return;
     }
     
+    // Force reload users from Firebase
+    console.log('Reloading users from Firebase...');
+    users = await db.getUsers() || [];
+    window.users = users;
+    
+    console.log('Available users:', users.length);
+    console.log('Trying to login with:', email);
+    
     // Ensure users is an array
     if (!Array.isArray(users)) {
         users = [];
@@ -185,12 +193,14 @@ async function login() {
     const user = users.find(u => u.email === email && u.password === password);
     
     if (user) {
+        console.log('Login successful for:', user.username);
         currentUser = user;
         window.currentUser = currentUser;
         await db.saveCurrentUser(currentUser);
         showApp();
         showNotification('Login successful!');
     } else {
+        console.log('Login failed. Available emails:', users.map(u => u.email));
         showNotification('Invalid credentials');
     }
 }
