@@ -23,10 +23,10 @@ async function initAuthData() {
             users = localUsers ? JSON.parse(localUsers) : [];
         }
         
-        // Add default user if no users exist (for GitHub Pages)
+        // Add fallback users if no users exist
         if (!users.length) {
-            console.log('No users found, creating default user');
-            users = [{
+            console.log('No users found, using fallback users');
+            users = window.CONFIG ? window.CONFIG.fallbackUsers : [{
                 id: 1,
                 username: 'admin',
                 email: 'admin@test.com',
@@ -35,12 +35,9 @@ async function initAuthData() {
                 joinDate: new Date().toLocaleDateString()
             }];
             
-            // Save to both Firebase and localStorage
-            const saved = await db.saveUsers(users);
-            if (!saved) {
-                console.log('Firebase save failed, using localStorage only');
-                localStorage.setItem('dailyTaskApp_users', JSON.stringify(users));
-            }
+            // Save to localStorage for offline use
+            localStorage.setItem('dailyTaskApp_users', JSON.stringify(users));
+            console.log('Fallback users loaded:', users.length);
             
             window.users = users;
         }
