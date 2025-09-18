@@ -1,8 +1,21 @@
 // Database Module - Firebase
 class Database {
     constructor() {
+        // Force HTTPS for GitHub Pages compatibility
         this.baseUrl = 'https://dailytaskapp-fd302-default-rtdb.firebaseio.com/';
         console.log('Database initialized with URL:', this.baseUrl);
+        
+        // Test connection immediately
+        this.testConnection();
+    }
+    
+    async testConnection() {
+        try {
+            const response = await fetch(`${this.baseUrl}.json`);
+            console.log('Firebase connection test:', response.status, response.ok);
+        } catch (error) {
+            console.error('Firebase connection failed:', error);
+        }
     }
 
     async readData(key) {

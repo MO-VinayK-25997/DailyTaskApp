@@ -23,8 +23,9 @@ async function initAuthData() {
             users = localUsers ? JSON.parse(localUsers) : [];
         }
         
-        // Add default user if no users exist
+        // Add default user if no users exist (for GitHub Pages)
         if (!users.length) {
+            console.log('No users found, creating default user');
             users = [{
                 id: 1,
                 username: 'admin',
@@ -33,7 +34,15 @@ async function initAuthData() {
                 role: 'admin',
                 joinDate: new Date().toLocaleDateString()
             }];
-            await db.saveUsers(users);
+            
+            // Save to both Firebase and localStorage
+            const saved = await db.saveUsers(users);
+            if (!saved) {
+                console.log('Firebase save failed, using localStorage only');
+                localStorage.setItem('dailyTaskApp_users', JSON.stringify(users));
+            }
+            
+            window.users = users;
         }
         
         window.users = users;
