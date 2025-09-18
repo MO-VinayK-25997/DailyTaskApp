@@ -2,21 +2,36 @@
 class Database {
     constructor() {
         this.baseUrl = 'https://dailytaskapp-fd302-default-rtdb.firebaseio.com/';
+        console.log('Database initialized with URL:', this.baseUrl);
     }
 
     async readData(key) {
         try {
+            console.log(`Fetching ${key} from Firebase...`);
             const response = await fetch(`${this.baseUrl}${key}.json`);
+            console.log(`Response status for ${key}:`, response.status);
+            
             if (!response.ok) {
                 console.error(`HTTP Error ${response.status}: ${response.statusText}`);
-                return key === 'currentUser' ? null : [];
+                // Try localStorage fallback
+                const localData = localStorage.getItem(`dailyTaskApp_${key}`);
+                return localData ? JSON.parse(localData) : (key === 'currentUser' ? null : []);
             }
+            
             const data = await response.json();
+            console.log(`Data received for ${key}:`, data);
+            
+            // Cache in localStorage
+            if (data && key !== 'currentUser') {
+                localStorage.setItem(`dailyTaskApp_${key}`, JSON.stringify(data));
+            }
+            
             return data || (key === 'currentUser' ? null : []);
         } catch (error) {
             console.error(`Error reading ${key}:`, error);
-            // Return empty data for GitHub Pages compatibility
-            return key === 'currentUser' ? null : [];
+            // Fallback to localStorage
+            const localData = localStorage.getItem(`dailyTaskApp_${key}`);
+            return localData ? JSON.parse(localData) : (key === 'currentUser' ? null : []);
         }
     }
 
