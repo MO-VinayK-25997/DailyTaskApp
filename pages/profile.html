@@ -1,0 +1,51 @@
+<div class="page" id="profile">
+    <h2>Profile</h2>
+    <div class="card">
+        <div class="profile-info">
+            <div class="avatar">👤</div>
+            <h3 id="profileUsername">John Doe</h3>
+            <p id="profileRole">Project Manager</p>
+            <button class="action-btn" id="editProfileBtn">✏️ Edit Profile</button>
+        </div>
+        
+        <div class="profile-details" id="profileDetails">
+            <div class="detail-row">
+                <span>Username:</span>
+                <span id="displayUsername">-</span>
+            </div>
+            <div class="detail-row">
+                <span>Email:</span>
+                <span id="displayEmail">-</span>
+            </div>
+            <div class="detail-row">
+                <span>Role:</span>
+                <span id="displayRole">-</span>
+            </div>
+            <div class="detail-row">
+                <span>Join Date:</span>
+                <span id="displayJoinDate">-</span>
+            </div>
+        </div>
+        
+        <div class="profile-edit" id="profileEdit" style="display: none;">
+            <input type="text" id="editUsername" placeholder="Username">
+            <input type="email" id="editEmail" placeholder="Email">
+            <input type="password" id="editPassword" placeholder="New Password (optional)">
+            <div class="input-actions">
+                <button class="save-btn" id="saveProfile">Save</button>
+                <button class="cancel-btn" id="cancelEdit">Cancel</button>
+            </div>
+        </div>
+        
+        <div class="profile-stats">
+            <div class="stat-row">
+                <span>Completed Todos:</span>
+                <span id="completedTodos">0</span>
+            </div>
+            <div class="stat-row">
+                <span>Active Projects:</span>
+                <span id="activeProjects">0</span>
+            </div>
+        </div>
+    </div>
+</div>

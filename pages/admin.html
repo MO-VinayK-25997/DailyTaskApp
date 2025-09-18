@@ -1,0 +1,74 @@
+<div class="page" id="admin">
+    <h2>Admin Panel</h2>
+    <div class="card">
+        <h3>User Management</h3>
+        <div class="admin-stats">
+            <div class="admin-stat">
+                <span class="admin-number" id="totalUsers">0</span>
+                <span class="admin-label">Total Users</span>
+            </div>
+            <div class="admin-stat">
+                <span class="admin-number" id="totalTodos">0</span>
+                <span class="admin-label">Total Todos</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>All Users</h3>
+        <div class="user-list" id="userList">
+            <!-- Users will be listed here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>All Users Todo Lists</h3>
+        <button class="admin-btn" onclick="viewAllUsersTodos()">Load All Todo Lists</button>
+        <div class="all-users-todos" id="allUsersTodos">
+            <!-- All users todos will be displayed here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>User Data Management</h3>
+        <div class="admin-user-select">
+            <select id="adminUserSelect">
+                <option value="">Select user to view data</option>
+            </select>
+            <button class="admin-btn" onclick="viewUserData()">View Data</button>
+        </div>
+        <div class="user-data-display" id="userDataDisplay">
+            <!-- User data will be displayed here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Team Collaboration Management</h3>
+        <div class="admin-collab-form">
+            <select id="adminUserMultiSelect" multiple size="6">
+                <!-- Users will be populated here -->
+            </select>
+            <button class="admin-btn" onclick="adminCreateMultipleCollaborations()">Create Collaborations</button>
+        </div>
+        <div class="admin-collab-list" id="adminCollabList">
+            <!-- Active collaborations will be listed here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Project Management</h3>
+        <div class="project-input">
+            <input type="text" id="adminProjectName" placeholder="New project name...">
+            <button class="admin-btn" id="adminAddProjectBtn">Add Project</button>
+        </div>
+        <div class="admin-project-list" id="adminProjectList">
+            <!-- Admin projects will be added here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>System Actions</h3>
+        <button class="admin-btn" onclick="clearAllData()">Clear All Data</button>
+        <button class="admin-btn" onclick="exportData()">Export Data</button>
+    </div>
+</div>

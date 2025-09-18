@@ -1,0 +1,43 @@
+<div class="page" id="reports">
+    <h2>Reports</h2>
+    <div class="card">
+        <h3>Report Filters</h3>
+        <div class="filter-controls">
+            <select id="reportWeekFilter">
+                <option value="all">All Time</option>
+                <option value="this-week">This Week</option>
+                <option value="last-week">Last Week</option>
+                <option value="next-week">Next Week</option>
+            </select>
+            <select id="reportTypeFilter">
+                <option value="both">My + Team Report</option>
+                <option value="my">My Report Only</option>
+                <option value="team">Team Report Only</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Todo Statistics</h3>
+        <div class="report-stats" id="reportStats">
+            <!-- Stats will be populated here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Export Report</h3>
+        <div class="export-form">
+            <input type="date" id="reportStartDate" placeholder="Start Date">
+            <input type="date" id="reportEndDate" placeholder="End Date">
+            <button class="action-btn" onclick="exportReportToExcel()">📊 Download Report</button>
+            <button class="action-btn" onclick="viewReportInTab()">🔗 View in New Tab</button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Todo Details</h3>
+        <div class="report-details" id="reportDetails">
+            <!-- Details will be populated here -->
+        </div>
+    </div>
+</div>
