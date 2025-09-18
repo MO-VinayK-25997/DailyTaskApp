@@ -11,8 +11,15 @@ class Database {
     
     async testConnection() {
         try {
+            console.log('Testing Firebase connection from:', window.location.hostname);
             const response = await fetch(`${this.baseUrl}.json`);
             console.log('Firebase connection test:', response.status, response.ok);
+            
+            if (response.status === 401) {
+                console.error('Firebase 401: Check database rules');
+            } else if (response.status === 403) {
+                console.error('Firebase 403: Domain not authorized');
+            }
         } catch (error) {
             console.error('Firebase connection failed:', error);
         }
