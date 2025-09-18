@@ -8,21 +8,41 @@ let currentUser = window.currentUser;
 
 // Initialize data from JSON files
 async function initAuthData() {
-    users = await db.getUsers();
-    currentUser = await db.getCurrentUser();
-    todos = await db.getTodos();
-    projects = await db.getProjects();
-    teamMembers = await db.getTeamMembers();
-    activeCollaborations = await db.getActiveCollaborations();
-    collaborationRequests = await db.getCollaborationRequests();
-    
-    window.users = users;
-    window.currentUser = currentUser;
-    window.todos = todos;
-    window.projects = projects;
-    window.teamMembers = teamMembers;
-    window.activeCollaborations = activeCollaborations;
-    window.collaborationRequests = collaborationRequests;
+    try {
+        users = await db.getUsers() || [];
+        currentUser = await db.getCurrentUser();
+        todos = await db.getTodos() || [];
+        projects = await db.getProjects() || [];
+        teamMembers = await db.getTeamMembers() || [];
+        activeCollaborations = await db.getActiveCollaborations() || [];
+        collaborationRequests = await db.getCollaborationRequests() || [];
+        
+        // Fallback to localStorage if Firebase fails
+        if (!users.length) {
+            const localUsers = localStorage.getItem('dailyTaskApp_users');
+            users = localUsers ? JSON.parse(localUsers) : [];
+        }
+        
+        window.users = users;
+        window.currentUser = currentUser;
+        window.todos = todos;
+        window.projects = projects;
+        window.teamMembers = teamMembers;
+        window.activeCollaborations = activeCollaborations;
+        window.collaborationRequests = collaborationRequests;
+        
+        console.log('Data initialized successfully');
+    } catch (error) {
+        console.error('Error initializing data:', error);
+        // Initialize with empty arrays
+        users = [];
+        todos = [];
+        projects = [];
+        teamMembers = [];
+        activeCollaborations = [];
+        collaborationRequests = [];
+        currentUser = null;
+    }
 }
 
 // Authentication functions

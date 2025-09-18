@@ -7,10 +7,15 @@ class Database {
     async readData(key) {
         try {
             const response = await fetch(`${this.baseUrl}${key}.json`);
+            if (!response.ok) {
+                console.error(`HTTP Error ${response.status}: ${response.statusText}`);
+                return key === 'currentUser' ? null : [];
+            }
             const data = await response.json();
             return data || (key === 'currentUser' ? null : []);
         } catch (error) {
             console.error(`Error reading ${key}:`, error);
+            // Return empty data for GitHub Pages compatibility
             return key === 'currentUser' ? null : [];
         }
     }
@@ -19,12 +24,24 @@ class Database {
         try {
             const response = await fetch(`${this.baseUrl}${key}.json`, {
                 method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(data)
             });
+            if (!response.ok) {
+                console.error(`HTTP Error ${response.status}: ${response.statusText}`);
+            }
             return response.ok;
         } catch (error) {
             console.error(`Error writing ${key}:`, error);
-            return false;
+            // For GitHub Pages, fall back to localStorage
+            try {
+                localStorage.setItem(`dailyTaskApp_${key}`, JSON.stringify(data));
+                return true;
+            } catch (e) {
+                return false;
+            }
         }
     }
 
